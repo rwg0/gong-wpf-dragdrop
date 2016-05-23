@@ -1307,5 +1307,64 @@
         </ListBox>
       </Grid>
     </TabItem>
-  </TabControl>
+        <TabItem Header="Drag Handles">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <ListBox Grid.Column="0"
+                 Grid.Row="1"
+                 ItemsSource="{Binding Collection1}"
+                 dd:DragDrop.IsDragSource="True"
+                 dd:DragDrop.IsDropTarget="True"
+                 dd:DragDrop.DragAdornerTemplate="{StaticResource DragAdorner}" HorizontalContentAlignment="Stretch">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Expander >
+                                <Expander.Header>
+                                    <dd:DragHandle>
+                                        <TextBlock Text="{Binding}"></TextBlock>
+                                    </dd:DragHandle>
+                                </Expander.Header>
+                                <FlowDocumentScrollViewer IsSelectionEnabled="False"
+                                        IsHitTestVisible="False">
+                                    <FlowDocument>
+                                        <Paragraph>
+                                            <TextBlock Text="{Binding}" />
+                                        </Paragraph>
+                                    </FlowDocument>
+                                </FlowDocumentScrollViewer>
+                            </Expander>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ListBox>
+
+                <ListBox Grid.Column="1"
+                 Grid.Row="1"
+                 ItemsSource="{Binding Collection2}"
+                 dd:DragDrop.IsDragSource="True"
+                 dd:DragDrop.IsDropTarget="True"
+                 dd:DragDrop.DragAdornerTemplate="{StaticResource DragAdorner}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <FlowDocumentScrollViewer IsSelectionEnabled="False"
+                                        IsHitTestVisible="False">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <TextBlock Text="{Binding}" />
+                                    </Paragraph>
+                                </FlowDocument>
+                            </FlowDocumentScrollViewer>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Window>

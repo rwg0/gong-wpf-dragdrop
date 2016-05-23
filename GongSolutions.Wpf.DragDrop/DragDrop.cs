@@ -694,6 +694,22 @@ namespace GongSolutions.Wpf.DragDrop
       return dropHandler ?? DefaultDropHandler;
     }
 
+    private static bool IsNonDraggableElement(object sender, Point elementPosition)
+    {
+        return HitTestUtilities.HitTest4Type<RangeBase>(sender, elementPosition)
+                || HitTestUtilities.HitTest4Type<ButtonBase>(sender, elementPosition)
+                || HitTestUtilities.HitTest4Type<TextBoxBase>(sender, elementPosition)
+                || HitTestUtilities.HitTest4Type<PasswordBox>(sender, elementPosition)
+                || HitTestUtilities.HitTest4Type<ComboBox>(sender, elementPosition)
+                || HitTestUtilities.HitTest4GridViewColumnHeader(sender, elementPosition)
+                || HitTestUtilities.HitTest4DataGridTypes(sender, elementPosition);
+    }
+
+    private static bool IsDragHandle(object sender, Point elementPosition)
+    {
+        return HitTestUtilities.HitTest4Type<DragHandle>(sender, elementPosition);
+    }
+
     private static void DragSource_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
       // Ignore the click if clickCount != 1 or the user has clicked on a scrollbar.
@@ -703,13 +719,7 @@ namespace GongSolutions.Wpf.DragDrop
           || (e.Source as UIElement).IsDragSourceIgnored()
           || (e.OriginalSource as UIElement).IsDragSourceIgnored()
           || (sender is TabControl) && !HitTestUtilities.HitTest4Type<TabPanel>(sender, elementPosition)
-          || HitTestUtilities.HitTest4Type<RangeBase>(sender, elementPosition)
-          || HitTestUtilities.HitTest4Type<ButtonBase>(sender, elementPosition)
-          || HitTestUtilities.HitTest4Type<TextBoxBase>(sender, elementPosition)
-          || HitTestUtilities.HitTest4Type<PasswordBox>(sender, elementPosition)
-          || HitTestUtilities.HitTest4Type<ComboBox>(sender, elementPosition)
-          || HitTestUtilities.HitTest4GridViewColumnHeader(sender, elementPosition)
-          || HitTestUtilities.HitTest4DataGridTypes(sender, elementPosition)
+          || (IsNonDraggableElement(sender, elementPosition) && !IsDragHandle(sender, elementPosition))
           || HitTestUtilities.IsNotPartOfSender(sender, e)) {
         m_DragInfo = null;
         return;
