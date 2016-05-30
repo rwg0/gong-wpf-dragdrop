@@ -9,4 +9,9 @@ namespace GongSolutions.Wpf.DragDrop
     public class DragHandle : ContentControl
     {
     }
+
+    public class NoDrag : ContentControl
+    {
+        
+    }
 }

@@ -702,7 +702,9 @@ namespace GongSolutions.Wpf.DragDrop
                 || HitTestUtilities.HitTest4Type<PasswordBox>(sender, elementPosition)
                 || HitTestUtilities.HitTest4Type<ComboBox>(sender, elementPosition)
                 || HitTestUtilities.HitTest4GridViewColumnHeader(sender, elementPosition)
+                || HitTestUtilities.HitTest4Type<NoDrag>(sender, elementPosition)
                 || HitTestUtilities.HitTest4DataGridTypes(sender, elementPosition);
+
     }
 
     private static bool IsDragHandle(object sender, Point elementPosition)
@@ -744,6 +746,9 @@ namespace GongSolutions.Wpf.DragDrop
           e.Handled = true;
         }
       }
+
+        if (m_DragInfo != null)
+            e.Handled = true;
     }
 
     private static void DragSource_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
